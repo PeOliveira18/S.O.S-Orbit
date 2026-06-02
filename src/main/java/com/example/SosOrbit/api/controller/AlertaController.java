@@ -4,7 +4,7 @@ import com.example.SosOrbit.api.dto.AlertaDTO;
 import com.example.SosOrbit.api.model.NivelRisco;
 import com.example.SosOrbit.api.model.StatusAlerta;
 import com.example.SosOrbit.api.service.AlertaService;
-import org.springframework.http.*;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,11 +44,7 @@ public class AlertaController {
     }
 
     @PutMapping("/{id}/status/{status}")
-    public ResponseEntity<?> atualizarStatus(@PathVariable Long id, @PathVariable StatusAlerta status) {
-        try {
-            return ResponseEntity.ok(AlertaDTO.from(service.atualizarStatus(id, status)));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<AlertaDTO> atualizarStatus(@PathVariable Long id, @PathVariable StatusAlerta status) {
+        return ResponseEntity.ok(AlertaDTO.from(service.atualizarStatus(id, status)));
     }
 }

@@ -1,9 +1,11 @@
 package com.example.SosOrbit.api.dto;
 
 import com.example.SosOrbit.api.model.Abrigo;
+import com.example.SosOrbit.api.validation.VagasDentroDaCapacidade;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 
+@VagasDentroDaCapacidade
 public record AbrigoDTO(
         @JsonProperty(access = JsonProperty.Access.READ_ONLY)
         Long id,

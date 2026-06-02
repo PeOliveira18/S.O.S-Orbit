@@ -4,7 +4,8 @@ import com.example.SosOrbit.api.dto.DadoAmbientalDTO;
 import com.example.SosOrbit.api.model.NivelRisco;
 import com.example.SosOrbit.api.service.DadoAmbientalService;
 import jakarta.validation.Valid;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,11 +45,7 @@ public class DadoAmbientalController {
     }
 
     @PostMapping("/{regiaoId}")
-    public ResponseEntity<?> criar(@PathVariable Long regiaoId, @Valid @RequestBody DadoAmbientalDTO dto) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(DadoAmbientalDTO.from(service.salvar(regiaoId, dto)));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<DadoAmbientalDTO> criar(@PathVariable Long regiaoId, @Valid @RequestBody DadoAmbientalDTO dto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(DadoAmbientalDTO.from(service.salvar(regiaoId, dto)));
     }
 }

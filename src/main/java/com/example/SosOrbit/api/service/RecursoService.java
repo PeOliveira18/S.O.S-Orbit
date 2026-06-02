@@ -1,6 +1,7 @@
 package com.example.SosOrbit.api.service;
 
 import com.example.SosOrbit.api.dto.RecursoDTO;
+import com.example.SosOrbit.api.exception.ResourceNotFoundException;
 import com.example.SosOrbit.api.model.Alerta;
 import com.example.SosOrbit.api.model.PrioridadeRecurso;
 import com.example.SosOrbit.api.model.Recurso;
@@ -36,7 +37,7 @@ public class RecursoService {
 
     public Recurso salvar(Long alertaId, RecursoDTO dto) {
         Alerta alerta = alertaRepository.findById(alertaId)
-                .orElseThrow(() -> new RuntimeException("Alerta nao encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Alerta nao encontrado"));
         Recurso recurso = converterDto(dto);
         recurso.setAlerta(alerta);
         return recursoRepository.save(recurso);
@@ -55,7 +56,7 @@ public class RecursoService {
 
     public Recurso atualizarStatus(Long id, StatusRecurso status) {
         Recurso recurso = recursoRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Recurso nao encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Recurso nao encontrado"));
         recurso.setStatus(status);
         return recursoRepository.save(recurso);
     }

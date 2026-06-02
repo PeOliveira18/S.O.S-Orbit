@@ -1,5 +1,7 @@
 package com.example.SosOrbit.api.service;
 
+import com.example.SosOrbit.api.messaging.AlertaEventPublisher;
+import com.example.SosOrbit.api.exception.ResourceNotFoundException;
 import com.example.SosOrbit.api.model.Alerta;
 import com.example.SosOrbit.api.model.NivelRisco;
 import com.example.SosOrbit.api.model.StatusAlerta;
@@ -12,9 +14,11 @@ import java.util.List;
 public class AlertaService {
 
     private final AlertaRepository repository;
+    private final AlertaEventPublisher alertaEventPublisher;
 
-    public AlertaService(AlertaRepository repository) {
+    public AlertaService(AlertaRepository repository, AlertaEventPublisher alertaEventPublisher) {
         this.repository = repository;
+        this.alertaEventPublisher = alertaEventPublisher;
     }
 
     public List<Alerta> listar() {
@@ -31,8 +35,10 @@ public class AlertaService {
 
     public Alerta atualizarStatus(Long id, StatusAlerta status) {
         Alerta alerta = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Alerta nao encontrado"));
+                .orElseThrow(() -> new ResourceNotFoundException("Alerta nao encontrado"));
         alerta.setStatus(status);
-        return repository.save(alerta);
+        Alerta alertaSalvo = repository.save(alerta);
+        alertaEventPublisher.publicarStatusAtualizado(alertaSalvo);
+        return alertaSalvo;
     }
 }

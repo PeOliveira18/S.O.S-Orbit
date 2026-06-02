@@ -4,7 +4,8 @@ import com.example.SosOrbit.api.dto.RegiaoMonitoradaDTO;
 import com.example.SosOrbit.api.model.TipoRisco;
 import com.example.SosOrbit.api.service.RegiaoMonitoradaService;
 import jakarta.validation.Valid;
-import org.springframework.http.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,12 +29,8 @@ public class RegiaoMonitoradaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> buscarPorId(@PathVariable Long id) {
-        try {
-            return ResponseEntity.ok(RegiaoMonitoradaDTO.from(service.buscarPorId(id)));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<RegiaoMonitoradaDTO> buscarPorId(@PathVariable Long id) {
+        return ResponseEntity.ok(RegiaoMonitoradaDTO.from(service.buscarPorId(id)));
     }
 
     @GetMapping("/cidade")
@@ -58,21 +55,13 @@ public class RegiaoMonitoradaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizar(@PathVariable Long id, @Valid @RequestBody RegiaoMonitoradaDTO dto) {
-        try {
-            return ResponseEntity.ok(RegiaoMonitoradaDTO.from(service.atualizar(id, dto)));
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<RegiaoMonitoradaDTO> atualizar(@PathVariable Long id, @Valid @RequestBody RegiaoMonitoradaDTO dto) {
+        return ResponseEntity.ok(RegiaoMonitoradaDTO.from(service.atualizar(id, dto)));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletar(@PathVariable Long id) {
-        try {
-            service.deletar(id);
-            return ResponseEntity.noContent().build();
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        }
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }

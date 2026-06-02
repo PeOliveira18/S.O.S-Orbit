@@ -1,6 +1,7 @@
 package com.example.SosOrbit.api.service;
 
 import com.example.SosOrbit.api.dto.RegiaoMonitoradaDTO;
+import com.example.SosOrbit.api.exception.ResourceNotFoundException;
 import com.example.SosOrbit.api.model.RegiaoMonitorada;
 import com.example.SosOrbit.api.model.TipoRisco;
 import com.example.SosOrbit.api.repository.RegiaoMonitoradaRepository;
@@ -23,7 +24,7 @@ public class RegiaoMonitoradaService {
 
     public RegiaoMonitorada buscarPorId(Long id) {
         return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Regiao nao encontrada"));
+                .orElseThrow(() -> new ResourceNotFoundException("Regiao nao encontrada"));
     }
 
     public List<RegiaoMonitorada> buscarPorCidade(String cidade) {
