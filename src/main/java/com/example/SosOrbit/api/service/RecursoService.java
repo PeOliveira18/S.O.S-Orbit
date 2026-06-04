@@ -8,6 +8,7 @@ import com.example.SosOrbit.api.model.Recurso;
 import com.example.SosOrbit.api.model.StatusRecurso;
 import com.example.SosOrbit.api.repository.AlertaRepository;
 import com.example.SosOrbit.api.repository.RecursoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -43,21 +44,41 @@ public class RecursoService {
         return recursoRepository.save(recurso);
     }
 
+    public Recurso atualizar(Long id, RecursoDTO dto) {
+        Recurso recurso = buscarPorId(id);
+        preencherDados(recurso, dto);
+        return recursoRepository.save(recurso);
+    }
+
+    public Recurso atualizarStatus(Long id, StatusRecurso status) {
+        Recurso recurso = buscarPorId(id);
+        recurso.setStatus(status);
+        return recursoRepository.save(recurso);
+    }
+
+    @Transactional
+    public void deletar(Long id) {
+        Recurso recurso = buscarPorId(id);
+        recursoRepository.delete(recurso);
+    }
+
     private Recurso converterDto(RecursoDTO dto) {
         Recurso recurso = new Recurso();
+        preencherDados(recurso, dto);
+        return recurso;
+    }
+
+    private void preencherDados(Recurso recurso, RecursoDTO dto) {
         recurso.setTipo(dto.tipo());
         recurso.setDescricao(dto.descricao());
         recurso.setQuantidade(dto.quantidade());
         recurso.setUnidadeMedida(dto.unidadeMedida());
         recurso.setPrioridade(dto.prioridade() == null ? PrioridadeRecurso.MEDIA : dto.prioridade());
         recurso.setStatus(dto.status() == null ? StatusRecurso.DISPONIVEL : dto.status());
-        return recurso;
     }
 
-    public Recurso atualizarStatus(Long id, StatusRecurso status) {
-        Recurso recurso = recursoRepository.findById(id)
+    private Recurso buscarPorId(Long id) {
+        return recursoRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Recurso nao encontrado"));
-        recurso.setStatus(status);
-        return recursoRepository.save(recurso);
     }
 }

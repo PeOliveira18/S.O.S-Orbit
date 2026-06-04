@@ -10,4 +10,5 @@ import java.util.List;
 public interface AlertaRepository extends JpaRepository<Alerta, Long> {
     List<Alerta> findByStatus(StatusAlerta status);
     List<Alerta> findByNivelRisco(NivelRisco nivelRisco);
+    List<Alerta> findByDadoAmbientalId(Long dadoAmbientalId);
 }

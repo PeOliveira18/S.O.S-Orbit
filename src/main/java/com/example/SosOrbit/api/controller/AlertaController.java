@@ -4,6 +4,7 @@ import com.example.SosOrbit.api.dto.AlertaDTO;
 import com.example.SosOrbit.api.model.NivelRisco;
 import com.example.SosOrbit.api.model.StatusAlerta;
 import com.example.SosOrbit.api.service.AlertaService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +47,16 @@ public class AlertaController {
     @PutMapping("/{id}/status/{status}")
     public ResponseEntity<AlertaDTO> atualizarStatus(@PathVariable Long id, @PathVariable StatusAlerta status) {
         return ResponseEntity.ok(AlertaDTO.from(service.atualizarStatus(id, status)));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AlertaDTO> atualizar(@PathVariable Long id, @Valid @RequestBody AlertaDTO dto) {
+        return ResponseEntity.ok(AlertaDTO.from(service.atualizar(id, dto)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
     }
 }

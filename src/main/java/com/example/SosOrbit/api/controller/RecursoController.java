@@ -54,4 +54,15 @@ public class RecursoController {
     public ResponseEntity<RecursoDTO> atualizarStatus(@PathVariable Long id, @PathVariable StatusRecurso status) {
         return ResponseEntity.ok(RecursoDTO.from(service.atualizarStatus(id, status)));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<RecursoDTO> atualizar(@PathVariable Long id, @Valid @RequestBody RecursoDTO dto) {
+        return ResponseEntity.ok(RecursoDTO.from(service.atualizar(id, dto)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
 }

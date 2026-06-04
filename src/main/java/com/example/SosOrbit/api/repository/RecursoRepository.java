@@ -9,4 +9,5 @@ import java.util.List;
 public interface RecursoRepository extends JpaRepository<Recurso, Long> {
     List<Recurso> findByAlertaId(Long alertaId);
     List<Recurso> findByPrioridade(PrioridadeRecurso prioridade);
+    void deleteByAlertaId(Long alertaId);
 }

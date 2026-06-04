@@ -48,4 +48,15 @@ public class DadoAmbientalController {
     public ResponseEntity<DadoAmbientalDTO> criar(@PathVariable Long regiaoId, @Valid @RequestBody DadoAmbientalDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(DadoAmbientalDTO.from(service.salvar(regiaoId, dto)));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<DadoAmbientalDTO> atualizar(@PathVariable Long id, @Valid @RequestBody DadoAmbientalDTO dto) {
+        return ResponseEntity.ok(DadoAmbientalDTO.from(service.atualizar(id, dto)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -372,6 +372,33 @@ Resposta esperada:
 }
 ```
 
+#### Atualizar Dado Ambiental
+
+```http
+PUT http://localhost:8080/api/dados-ambientais/1
+Content-Type: application/json
+Authorization: Bearer TOKEN_GERADO
+```
+
+```json
+{
+  "chuvaPrevistaMm": 120,
+  "temperatura": 32,
+  "umidade": 88,
+  "velocidadeVentoKmH": 45,
+  "nivelRioMetros": 5,
+  "focosCalor": 0,
+  "historicoOcorrencias": 15
+}
+```
+
+#### Deletar Dado Ambiental
+
+```http
+DELETE http://localhost:8080/api/dados-ambientais/1
+Authorization: Bearer TOKEN_GERADO
+```
+
 ### Alertas
 
 ```http
@@ -386,6 +413,27 @@ Authorization: Bearer TOKEN_GERADO
 
 ```http
 PUT http://localhost:8080/api/alertas/1/status/EM_ATENDIMENTO
+Authorization: Bearer TOKEN_GERADO
+```
+
+```http
+PUT http://localhost:8080/api/alertas/1
+Content-Type: application/json
+Authorization: Bearer TOKEN_GERADO
+```
+
+```json
+{
+  "titulo": "Risco critico atualizado",
+  "mensagem": "Atendimento em andamento com prioridade alta.",
+  "indiceRisco": 95,
+  "nivelRisco": "CRITICO",
+  "status": "EM_ATENDIMENTO"
+}
+```
+
+```http
+DELETE http://localhost:8080/api/alertas/1
 Authorization: Bearer TOKEN_GERADO
 ```
 
@@ -419,6 +467,31 @@ Authorization: Bearer TOKEN_GERADO
 }
 ```
 
+```http
+PUT http://localhost:8080/api/abrigos/1
+Content-Type: application/json
+Authorization: Bearer TOKEN_GERADO
+```
+
+```json
+{
+  "nome": "Escola Municipal Central",
+  "endereco": "Rua das Flores, 100",
+  "cidade": "Sao Paulo",
+  "estado": "SP",
+  "latitude": -23.521,
+  "longitude": -46.64,
+  "capacidade": 350,
+  "vagasDisponiveis": 300,
+  "ativo": true
+}
+```
+
+```http
+DELETE http://localhost:8080/api/abrigos/1
+Authorization: Bearer TOKEN_GERADO
+```
+
 Validacao customizada:
 
 ```text
@@ -442,6 +515,28 @@ Authorization: Bearer TOKEN_GERADO
   "prioridade": "URGENTE",
   "status": "DISPONIVEL"
 }
+```
+
+```http
+PUT http://localhost:8080/api/recursos/1
+Content-Type: application/json
+Authorization: Bearer TOKEN_GERADO
+```
+
+```json
+{
+  "tipo": "AGUA",
+  "descricao": "Galoes de agua potavel atualizados",
+  "quantidade": 180,
+  "unidadeMedida": "unidades",
+  "prioridade": "URGENTE",
+  "status": "EM_USO"
+}
+```
+
+```http
+DELETE http://localhost:8080/api/recursos/1
+Authorization: Bearer TOKEN_GERADO
 ```
 
 ## Web Service SOAP

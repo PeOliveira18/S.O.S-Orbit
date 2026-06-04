@@ -46,4 +46,15 @@ public class AbrigoController {
     public ResponseEntity<AbrigoDTO> criar(@Valid @RequestBody AbrigoDTO dto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(AbrigoDTO.from(service.salvar(dto)));
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AbrigoDTO> atualizar(@PathVariable Long id, @Valid @RequestBody AbrigoDTO dto) {
+        return ResponseEntity.ok(AbrigoDTO.from(service.atualizar(id, dto)));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        service.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
 }

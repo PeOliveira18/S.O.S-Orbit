@@ -53,11 +53,13 @@ public class SecurityConfig {
 
                         .requestMatchers(HttpMethod.GET, "/api/dados-ambientais/**", "/api/alertas/**").hasAnyRole("OPERADOR", "DEFESA_CIVIL", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/dados-ambientais/**").hasAnyRole("DEFESA_CIVIL", "ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/alertas/**").hasAnyRole("DEFESA_CIVIL", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/dados-ambientais/**", "/api/alertas/**").hasAnyRole("DEFESA_CIVIL", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/dados-ambientais/**", "/api/alertas/**").hasRole("ADMIN")
 
                         .requestMatchers(HttpMethod.GET, "/api/abrigos/**", "/api/recursos/**").hasAnyRole("OPERADOR", "DEFESA_CIVIL", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/api/abrigos/**", "/api/recursos/**").hasAnyRole("DEFESA_CIVIL", "ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/recursos/**").hasAnyRole("DEFESA_CIVIL", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/abrigos/**", "/api/recursos/**").hasAnyRole("DEFESA_CIVIL", "ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/abrigos/**", "/api/recursos/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated()
                 )
